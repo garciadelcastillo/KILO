@@ -761,7 +761,7 @@ void keyPressed() {
     helpToggle=!helpToggle; 
     break;
   case 123:  // F12 
-    print("Taking screenshot");
+    println("Taking screenshot");
     kbPrint(0); 
     break;  // Save to PNG
   case 122: 
