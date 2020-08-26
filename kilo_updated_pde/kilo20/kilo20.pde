@@ -24,6 +24,7 @@ boolean activateDiagramAxial=true;
 boolean activateDiagramShear=true; 
 boolean activateDiagramBending=true; 
 boolean activateDiagramDeformed=true;
+boolean activateDiagramLoads=true;
 boolean cursorModeLoad=true; 
 boolean beamModeRotation=false; 
 float beamModeRotationAngleTemp;
@@ -123,14 +124,16 @@ void draw() {
   if (activateDiagramDeformed==true) {
     b1.displayBeamDiagramDeformed();
   }
-  if (showAllLoads==false) {
-    load[currentLoad].display();
-  } else {
-    for (int i=0; i<activeLoads; i++) {
-      load[i].display();
+  if (activateDiagramLoads) {
+    if (showAllLoads==false) {
+      load[currentLoad].display();
+    } else {
+      for (int i=0; i<activeLoads; i++) {
+        load[i].display();
+      }
     }
+    b1.displayNodesReactions();
   }
-  b1.displayNodesReactions();
   highlight.display();
   popMatrix();
 
@@ -143,5 +146,8 @@ void draw() {
   }
   noFill();
 
-  //  if (savePDF==true) {endRecord(); savePDF=false;}  // PDF exit route
+  if (savePDF==true) {
+    endRecord(); 
+    savePDF=false;
+  }  
 }

@@ -549,6 +549,9 @@ void kbChangeDisplayDiagram(int kindN) {
   case 3: 
     activateDiagramDeformed=!activateDiagramDeformed; 
     break;
+  case 4:
+    activateDiagramLoads=!activateDiagramLoads;
+    break;
   }
 }
 void kbChangeDisplayLoads() {
@@ -687,9 +690,6 @@ void keyboardInteraction() {
 
 // Display keys
 void keyPressed() {  
-  println("Pressed key " + key);
-  println("Pressed keyCode " + keyCode);
-
   switch(key) {
   case 'Q': 
   case 'q': 
@@ -714,6 +714,10 @@ void keyPressed() {
   case 'D': 
   case 'd': 
     kbChangeDisplayDiagram(3); 
+    break;
+  case 'L':
+  case 'l':
+    kbChangeDisplayDiagram(4); 
     break;
   case 'T': 
   case 't': 
@@ -776,7 +780,7 @@ String hh="              N __ Select active node\n";
 String hi="              ARROW KEYS __ Move active node\n";
 String hj="              V __ Change beam supports\n";
 String hk="              R __ Beam rotation mode toggle\n";
-String hl="              A-S-B-D __ Axial / Shear / Bending / Deformed shape diagrams toggle\n";
+String hl="              L-A-S-B-D __ Loads + Reactions / Axial / Shear / Bending / Deformed shape diagrams toggle\n";
 String hm="              Y-H __ Increase/Decrease EI\n\n";
 String hn="              F1 __  Help menu toggle\n";
 String ho="              F12 __  PNG screenshot (deactivated in web mode)\n";
