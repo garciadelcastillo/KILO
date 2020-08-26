@@ -25,6 +25,7 @@ boolean activateDiagramShear=true;
 boolean activateDiagramBending=true; 
 boolean activateDiagramDeformed=true;
 boolean activateDiagramLoads=true;
+boolean flipDiagramBending = false;
 boolean cursorModeLoad=true; 
 boolean beamModeRotation=false; 
 float beamModeRotationAngleTemp;

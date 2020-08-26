@@ -328,6 +328,7 @@ void drawReactionText(int i) {
 
 void drawBeamDiagram(int kind) {  // Kind means: 0=Axial, 1=Shear, 2=Bending, 3=Deformed shape
   float dScale=1;
+  float factor = 1;  
   switch(kind) {
   case 0: 
     stroke(greenDark); 
@@ -340,6 +341,9 @@ void drawBeamDiagram(int kind) {  // Kind means: 0=Axial, 1=Shear, 2=Bending, 3=
   case 2: 
     stroke(redDark); 
     fill(redLight); 
+    if (flipDiagramBending) {
+      factor = -1;
+    }
     break;
   case 3: 
     stroke(redBright); 
@@ -353,7 +357,7 @@ void drawBeamDiagram(int kind) {  // Kind means: 0=Axial, 1=Shear, 2=Bending, 3=
     beginShape(); 
     vertex(0, 0);
     for (int i=0; i<b1.beamRange; i++) {
-      vertex(i, dScale*b1.beamDiagramTotal[i][kind]);
+      vertex(i, factor * dScale*b1.beamDiagramTotal[i][kind]);
     }
     if (kind!=3) {
       vertex(b1.beamRange, 0);
@@ -363,7 +367,7 @@ void drawBeamDiagram(int kind) {  // Kind means: 0=Axial, 1=Shear, 2=Bending, 3=
     beginShape(); 
     vertex(0, 0);
     for (int i=0; i<b1.beamRange; i++) {
-      vertex(i, dScale*b1.beamDiagramLoad[i][currentLoad][kind]);
+      vertex(i, factor * dScale*b1.beamDiagramLoad[i][currentLoad][kind]);
     }
     if (kind!=3) {
       vertex(b1.beamRange, 0);
@@ -578,11 +582,10 @@ void kbChangeBeam() {
 void kbPrint(int toggle) {
   if (toggle==0) {
     save("screenshot_" + frameCount + ".png");
-    
+
     // Take a crop from the beam view and export only that
     PImage crop = get(210 + 1, 10 + 1, 780 - 1, 580 - 1);  // +1 to avoid catching black rim
     crop.save("screenshot_" + frameCount + "_crop.png");
-    
   } else {
     savePDF=true;
   }
@@ -735,6 +738,10 @@ void keyPressed() {
   case 'v': 
     kbChangeBeam(); 
     break;
+  case 'F': 
+  case 'f': 
+    flipDiagramBending = !flipDiagramBending; 
+    break;
   case '1': 
   case '2': 
   case '3': 
@@ -790,6 +797,7 @@ String hr="BEAM:\n";
 String hs="              1/5 __ Choose number of active loads\n";
 String ht="              Z __  Welcome screen\n";
 String hu="Version 2.0";
+String hv="              F __ Flip direction of the Bending diagram\n";
 
 void displayHelp() {
   fill(230, 100); 
@@ -801,7 +809,7 @@ void displayHelp() {
   fill(0); 
   textFont(txt10); 
   textLeading(11);
-  text(hr+hh+hi+hk+hj+hl+hm+hq+hs+hb+hc+hd+he+hf+hg+hn+ht, 10, 20);
+  text(hr+hh+hi+hk+hj+hl+hv+hm+hq+hs+hb+hc+hd+he+hf+hg+hn+ht, 10, 20);
   textAlign(RIGHT); 
   text(hu, 740, 550); 
   textAlign(LEFT);
