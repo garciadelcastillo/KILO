@@ -575,6 +575,11 @@ void kbChangeBeam() {
 void kbPrint(int toggle) {
   if (toggle==0) {
     save("screenshot_" + frameCount + ".png");
+    
+    // Take a crop from the beam view and export only that
+    PImage crop = get(210 + 1, 10 + 1, 780 - 1, 580 - 1);  // +1 to avoid catching black rim
+    crop.save("screenshot_" + frameCount + "_crop.png");
+    
   } else {
     savePDF=true;
   }
