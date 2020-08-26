@@ -573,8 +573,11 @@ void kbChangeBeam() {
   }
 }
 void kbPrint(int toggle) {
-  //  if (toggle==0) {save("screenshot.png");}
-  //  else {savePDF=true;}
+  if (toggle==0) {
+    save("screenshot_" + frameCount + ".png");
+  } else {
+    savePDF=true;
+  }
 }
 void kbChangeActiveLoads(int numb) {
   activeLoads=numb; 
@@ -678,7 +681,10 @@ void keyboardInteraction() {
 }
 
 // Display keys
-void keyPressed() {    
+void keyPressed() {  
+  println("Pressed key " + key);
+  println("Pressed keyCode " + keyCode);
+
   switch(key) {
   case 'Q': 
   case 'q': 
@@ -720,14 +726,6 @@ void keyPressed() {
   case 'v': 
     kbChangeBeam(); 
     break;
-  case 'I': 
-  case 'i': 
-    kbPrint(0); 
-    break;  // Save to PNG
-  case 'K': 
-  case 'k': 
-    kbPrint(1); 
-    break;  // Save to PDF
   case '1': 
   case '2': 
   case '3': 
@@ -740,12 +738,19 @@ void keyPressed() {
   case 'z': 
     welcomeToggle=true; 
     break;
-  }//    case CODED:
+  }
+  //    case CODED:
   switch(keyCode) {
-  case 'I':
-  case 'i':
+  case 112:  // F1
     helpToggle=!helpToggle; 
     break;
+  case 123:  // F12 
+    print("Taking screenshot");
+    kbPrint(0); 
+    break;  // Save to PNG
+  case 122: 
+    kbPrint(1); 
+    break;  // Save to PDF
   case SHIFT: 
     welcomeToggle=false; 
     break;
@@ -768,9 +773,9 @@ String hj="              V __ Change beam supports\n";
 String hk="              R __ Beam rotation mode toggle\n";
 String hl="              A-S-B-D __ Axial / Shear / Bending / Deformed shape diagrams toggle\n";
 String hm="              Y-H __ Increase/Decrease EI\n\n";
-String hn="              H __  Help menu toggle\n";
-// String ho="              I __  PNG screenshot (deactivated in web mode)\n";
-// String hp="              K __  PDF screenshot (deactivated in web mode)\n";
+String hn="              F1 __  Help menu toggle\n";
+String ho="              F12 __  PNG screenshot (deactivated in web mode)\n";
+String hp="             F11 __  PDF screenshot (deactivated in web mode)\n";
 String hq="LOADS:\n";
 String hr="BEAM:\n";
 String hs="              1/5 __ Choose number of active loads\n";
@@ -836,7 +841,7 @@ void displayDataText() {
   line(10, 29, 200, 29);
   textFont(txt10); 
   text("Use keys to interact with the structure", 10, 570);
-  text("Press 'H' for help", 10, 585);
+  text("Press 'F1' for help", 10, 585);
   text("BEAM", 10, 50);
   text("Length = "+nf(b1.L/100, 0, 2)+" m", 10, 60);
   text("Slope = "+nf(degrees(b1.slope), 0, 2)+"º", 10, 70);
